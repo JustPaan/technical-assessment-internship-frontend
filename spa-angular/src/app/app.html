@@ -1,0 +1,53 @@
+<div class="container py-4">
+  <h1 class="h3 mb-4 text-center">Angular SPA – Form & HTTP Demo</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mx-auto" style="max-width:720px;">
+    <div class="form-floating mb-3">
+      <input class="form-control" id="name" formControlName="name" placeholder="Name">
+      <label for="name">Name</label>
+      <div class="text-danger small mt-1" *ngIf="f['name'].touched && f['name'].invalid">
+        Name is required (min 2 chars).
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input class="form-control" id="email" formControlName="email" placeholder="Email">
+      <label for="email">Email</label>
+      <div class="text-danger small mt-1" *ngIf="f['email'].touched && f['email'].invalid">
+        Valid email is required.
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea class="form-control" id="message" style="height:140px" formControlName="message" placeholder="Message"></textarea>
+      <label for="message">Message</label>
+      <div class="d-flex justify-content-between mt-1 small">
+        <span class="text-danger" *ngIf="f['message'].touched && f['message'].invalid">
+          Message is required (min 10 chars).
+        </span>
+        <span class="text-muted">
+          Length: {{ f['message'].value?.length || 0 }}
+        </span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary w-100" type="submit" [disabled]="form.invalid || submitting">
+      {{ submitting ? 'Submitting…' : 'Submit' }}
+    </button>
+  </form>
+
+  <div class="text-center mt-5">
+    <button class="btn btn-outline-secondary" (click)="loadPosts()">Load Sample Posts (HTTP GET)</button>
+  </div>
+
+  <div class="row g-3 mt-3" *ngIf="posts.length">
+    <div class="col-12 col-md-6" *ngFor="let p of posts">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ p.title }}</h5>
+          <p class="card-text">{{ p.body }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
